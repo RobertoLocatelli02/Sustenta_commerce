@@ -3,7 +3,7 @@ package com.sustentaCommerce.ecommerce.model;
 public class UserLogin {
 
 	private String nome;
-	private String ussuario;
+	private String usuario;
 	private String senha;
 	private String token;
 	public String getNome() {
@@ -12,11 +12,11 @@ public class UserLogin {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getUssuario() {
-		return ussuario;
+	public String getUsuario() {
+		return usuario;
 	}
-	public void setUssuario(String ussuario) {
-		this.ussuario = ussuario;
+	public void setUsuario(String ussuario) {
+		this.usuario = ussuario;
 	}
 	public String getSenha() {
 		return senha;

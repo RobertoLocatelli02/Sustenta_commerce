@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sustentaCommerce.ecommerce.model.Produtos;
+import com.sustentaCommerce.ecommerce.model.UserLogin;
 import com.sustentaCommerce.ecommerce.model.Usuario;
 import com.sustentaCommerce.ecommerce.repository.UsuarioRepository;
 import com.sustentaCommerce.ecommerce.service.UsuarioService;
@@ -50,7 +49,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/email/{emailUsuario}")
-	ResponseEntity<Usuario> findByEmailUsuarioContainingIgnoreCase(@PathVariable String emailUsuario){
+	ResponseEntity<List<Usuario>> findByEmailUsuarioContainingIgnoreCase(@PathVariable String emailUsuario){
 		return ResponseEntity.ok(repositoryU.findAllByNomeCompletoUsuarioContainingIgnoreCase(emailUsuario));
 	}
 
@@ -66,11 +65,11 @@ public class UsuarioController {
 
 	@PostMapping("/logar")
 	public ResponseEntity<UserLogin> logar(@RequestBody Optional<UserLogin> user){
-		return usuarioService.logar(user).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+		return usuarioService.logarUsuario(user).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Optional<Usuario>> Post(@RequestBody Usuario usuarioNovo){
+	public ResponseEntity<Usuario> Post(@RequestBody Usuario usuarioNovo){
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.cadastrarUsuario(usuarioNovo));
 
 	}

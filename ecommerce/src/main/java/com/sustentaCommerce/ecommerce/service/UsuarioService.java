@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.sustentaCommerce.ecommerce.model.UserLogin;
 import com.sustentaCommerce.ecommerce.model.Usuario;
 import com.sustentaCommerce.ecommerce.repository.UsuarioRepository;
 
