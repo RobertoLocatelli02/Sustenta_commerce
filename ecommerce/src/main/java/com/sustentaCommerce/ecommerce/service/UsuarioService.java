@@ -18,33 +18,31 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Usuario cadastrarUsuario (Usuario usuarioNovo) {
+	public Optional<Usuario> cadastrarUsuario (Usuario usuarioNovo) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		String senhaCriptografada = encoder.encode(usuarioNovo.getSenhaUsuario());
 		usuarioNovo.setSenhaUsuario(senhaCriptografada);
-		
-		return repository.save(usuarioNovo);
-		
+		return Optional.ofNullable(repository.save(usuarioNovo));
 	}
 	
-	public Optional<UserLogin> logarUsuario (Optional<UserLogin> loginUser) {
-		BCryptPasswordEncoder enconder = new BCryptPasswordEncoder();
-		Optional<Usuario> usuario = repository.findByNomeCompletoUsuario(loginUser.get().getSenha());
-		
-		if (usuario.isPresent()) {
-			if(enconder.matches(loginUser.get().getSenha(), usuario.get().getSenhaUsuario() ));{
+	public Optional<UserLogin> logar(Optional<UserLogin> loginUser) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		Optional<Usuario> usuarioPresente = repository.findByEmailUsuario(loginUser.get().getUsuario());
+		if(usuarioPresente.isPresent()) {
+			System.out.println("Usuário encontrado");
+			if(encoder.matches(loginUser.get().getSenha(), usuarioPresente.get().getSenhaUsuario())) {
 				String auth = loginUser.get().getUsuario() + ":" + loginUser.get().getSenha();
-				byte[] encodeAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCCII")));
-				String token = "Basic " + new String (encodeAuth);
+				byte[] encodedAuth = Base64.encodeBase64(auth.getBytes(Charset.forName("US-ASCII")));
+				String token = "Basic " + new String(encodedAuth);
 				
 				loginUser.get().setToken(token);
-				loginUser.get().setNome (usuario.get().getNomeCompletoUsuario());
-				loginUser.get().setSenha(usuario.get().getSenhaUsuario());
-				
+				loginUser.get().setNome(usuarioPresente.get().getUsuario());
+				loginUser.get().setSenha(usuarioPresente.get().getSenhaUsuario());
+				System.out.println(token);
 				return loginUser;
-				
 			}
 		}
+		System.out.println("Usuário não encontrado");
 		return null;
 	}
 

@@ -16,7 +16,7 @@ public class UserDetailsImplement implements UserDetails {
 	private List<GrantedAuthority> authorities;
 
 	public UserDetailsImplement(Usuario user) {
-		this.userName = user.getNomeCompletoUsuario();
+		this.userName = user.getUsuario();
 		this.password = user.getSenhaUsuario();
 	}
 

@@ -12,6 +12,8 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "tb_usuario", uniqueConstraints=@UniqueConstraint(columnNames={"emailUsuario"}))
 public class Usuario {
@@ -26,7 +28,7 @@ public class Usuario {
 	
 	@NotNull
 	@Size(min = 5, max = 100)
-	private String nomeCompletoUsuario;
+	private String usuario;
 	
 	@NotNull
 	@Size(min = 5, max = 100)
@@ -39,6 +41,7 @@ public class Usuario {
 	private String tipoPagamento;
 	
 	@OneToMany(mappedBy = "usuario_produtos_criados")
+	@JsonIgnoreProperties({"usuario_produto"})
 	private List<Produtos> usuario_produto = new ArrayList<>();
 
 	public Long getIdUsuario() {
@@ -49,12 +52,12 @@ public class Usuario {
 		this.idUsuario = idUsuario;
 	}
 
-	public String getNomeCompletoUsuario() {
-		return nomeCompletoUsuario;
+	public String getUsuario() {
+		return usuario;
 	}
 
-	public void setNomeCompletoUsuario(String nomeCompletoUsuario) {
-		this.nomeCompletoUsuario = nomeCompletoUsuario;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getEmailUsuario() {
