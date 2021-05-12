@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.sustentaCommerce.ecommerce.model.Usuario;
 
-public class UserDetailsMpl implements UserDetails {
+public class UserDetailsImplement implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public class UserDetailsMpl implements UserDetails {
 	private String password;
 	private List<GrantedAuthority> authorities;
 
-	public UserDetailsMpl(Usuario user) {
+	public UserDetailsImplement(Usuario user) {
 		this.userName = user.getNomeCompletoUsuario();
 		this.password = user.getSenhaUsuario();
 	}
