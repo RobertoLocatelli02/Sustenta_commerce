@@ -36,8 +36,7 @@ public class ProdutoController {
 
 	@GetMapping("/id/{idProduto}") // retorna um produto por id
 	ResponseEntity<Produtos> findByIdProduto(@PathVariable Long idProduto) { // end point
-		return repositoryP.findById(idProduto).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+		return repositoryP.findById(idProduto).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("/precoUnitario/{precoUnitarioProduto}") // retorna todos os produtos por um preço unitario
