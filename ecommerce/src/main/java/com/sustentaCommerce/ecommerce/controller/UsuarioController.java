@@ -31,39 +31,33 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository repositoryU;
 	@Autowired
-	UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 
 	@GetMapping
-	ResponseEntity<List<Usuario>> findAllUsusario() {
+	ResponseEntity<List<Usuario>> findAllUsusario(){
 		return ResponseEntity.ok(repositoryU.findAll());
 	}
 
 	@GetMapping("/id/{idUsuario}")
-	ResponseEntity<Usuario> findAllByIdUsuario(@PathVariable Long idUsuario) {
+	ResponseEntity<Usuario> findByIdUsuario(@PathVariable Long idUsuario){
 		return repositoryU.findById(idUsuario).map(resp -> ResponseEntity.ok(resp))
 				.orElse(ResponseEntity.notFound().build());
 	}
 
 	@GetMapping("/nome/{nomeCompletoUsuario}")
-	ResponseEntity<List<Usuario>> findAllByNomeCompletoUsuarioContainingIgnoreCase(
-			@PathVariable String nomeCompletoUsuario) {
+	ResponseEntity<List<Usuario>> findAllByNomeCompletoUsuarioContainingIgnoreCase(@PathVariable String nomeCompletoUsuario){
 		return ResponseEntity.ok(repositoryU.findAllByNomeCompletoUsuarioContainingIgnoreCase(nomeCompletoUsuario));
 	}
 
 	@GetMapping("/email/{emailUsuario}")
-	ResponseEntity<List<Usuario>> findAllByEmailUsuarioContainingIgnoreCase(@PathVariable String emailUsuario) {
+	ResponseEntity<Usuario> findByEmailUsuarioContainingIgnoreCase(@PathVariable String emailUsuario){
 		return ResponseEntity.ok(repositoryU.findAllByNomeCompletoUsuarioContainingIgnoreCase(emailUsuario));
 	}
 
-	@GetMapping("/senha/{senhaUsuario}")
-	ResponseEntity<List<Usuario>> findAllBySenhaUsuarioContainingIgnoreCase(@PathVariable String senhaUsuario) {
-		return ResponseEntity.ok(repositoryU.findAllByNomeCompletoUsuarioContainingIgnoreCase(senhaUsuario));
-	}
-
 	@GetMapping
-	ResponseEntity<List<Usuario>> getAllUsuario() {
+	ResponseEntity<List<Usuario>> getAllUsuario(){
 		List<Usuario> listaUsuarios = repositoryU.findAll();
-		if (!listaUsuarios.isEmpty()) {
+		if(!listaUsuarios.isEmpty()){
 			return ResponseEntity.status(HttpStatus.OK).body(listaUsuarios);
 		} else {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -71,21 +65,20 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/logar")
-	public ResponseEntity<UserLogin> logar(@RequestBody Optional<UserLogin> user) {
-		return usuarioService.logar(user).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
+	public ResponseEntity<UserLogin> logar(@RequestBody Optional<UserLogin> user){
+		return usuarioService.logar(user).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Optional<Usuario>> Post(@RequestBody Usuario usuarioNovo) {
+	public ResponseEntity<Optional<Usuario>> Post(@RequestBody Usuario usuarioNovo){
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.cadastrarUsuario(usuarioNovo));
 
 	}
 
 	@PutMapping // atualizar informações de um produto
-	ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuarioAtualizado) { // end point
+	ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuarioAtualizado){ // end point
 		Optional<Usuario> usuarioExistente = repositoryU.findById(usuarioAtualizado.getIdUsuario());
-		if (usuarioExistente.isPresent()) {
+		if (usuarioExistente.isPresent()){
 			usuarioExistente.get().setNomeCompletoUsuario(usuarioAtualizado.getNomeCompletoUsuario());
 			usuarioExistente.get().setEmailUsuario(usuarioAtualizado.getEmailUsuario());
 			usuarioExistente.get().setSenhaUsuario(usuarioAtualizado.getSenhaUsuario());
@@ -98,7 +91,7 @@ public class UsuarioController {
 	}
 
 	@DeleteMapping("/id/{idUsuario}")
-	void deleteUsuario(@PathVariable Long idUsuario) {
+	void deleteUsuario(@PathVariable Long idUsuario){
 		repositoryU.deleteById(idUsuario);
 	}
 }
