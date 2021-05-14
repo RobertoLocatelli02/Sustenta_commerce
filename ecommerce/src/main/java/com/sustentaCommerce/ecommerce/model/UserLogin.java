@@ -15,8 +15,8 @@ public class UserLogin {
 	public String getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(String ussuario) {
-		this.usuario = ussuario;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 	public String getSenha() {
 		return senha;
