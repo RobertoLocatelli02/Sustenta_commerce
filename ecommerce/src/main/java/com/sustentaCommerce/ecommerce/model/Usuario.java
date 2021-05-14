@@ -3,6 +3,7 @@ package com.sustentaCommerce.ecommerce.model;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Usuario {
 	@NotNull
 	private String tipoPagamento;
 	
-	@OneToMany(mappedBy = "usuario_produtos_criados")
+	@OneToMany(mappedBy = "usuario_produtos_criados", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties({"usuario_produto"})
 	private List<Produtos> usuario_produto = new ArrayList<>();
 

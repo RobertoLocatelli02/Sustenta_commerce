@@ -36,12 +36,12 @@ public class Produtos {
 	private Integer quantidadeProduto;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "categoria_produtos")
+	@JoinColumn(name = "categoria_produtos", referencedColumnName = "idCategoria")
 	@JsonIgnoreProperties({"categoria_produtos","idCategoria"})
 	private Categorias categoria_produtos_criados;
 
 	@ManyToOne
-	@JoinColumn(name = "usuario_produto")
+	@JoinColumn(name = "usuario_produto", referencedColumnName = "idUsuario")
 	private Usuario usuario_produtos_criados;
 
 	public Long getIdProduto() {
