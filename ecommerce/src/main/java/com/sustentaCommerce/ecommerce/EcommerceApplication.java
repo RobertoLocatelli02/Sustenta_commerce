@@ -11,5 +11,4 @@ public class EcommerceApplication {
 		
 		System.out.println("******************** Aplicação deu certo :) ********************");
 	}
-
 }

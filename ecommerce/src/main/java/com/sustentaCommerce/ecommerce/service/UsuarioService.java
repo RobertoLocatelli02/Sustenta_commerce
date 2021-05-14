@@ -19,10 +19,15 @@ public class UsuarioService {
 	private UsuarioRepository repository;
 	
 	public Optional<Usuario> cadastrarUsuario (Usuario usuarioNovo) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String senhaCriptografada = encoder.encode(usuarioNovo.getSenhaUsuario());
-		usuarioNovo.setSenhaUsuario(senhaCriptografada);
-		return Optional.ofNullable(repository.save(usuarioNovo));
+		Optional<Usuario> usuarioExistente = repository.findByEmailUsuario(usuarioNovo.getEmailUsuario());
+		if (usuarioExistente.isPresent()) {
+			return Optional.empty();
+		} else {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String senhaCriptografada = encoder.encode(usuarioNovo.getSenhaUsuario());
+			usuarioNovo.setSenhaUsuario(senhaCriptografada);
+			return Optional.ofNullable(repository.save(usuarioNovo));
+		}
 	}
 	
 	public Optional<UserLogin> logar(Optional<UserLogin> loginUser) {

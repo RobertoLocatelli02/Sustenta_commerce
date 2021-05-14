@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sustentaCommerce.ecommerce.model.UserLogin;
 import com.sustentaCommerce.ecommerce.model.Usuario;
 import com.sustentaCommerce.ecommerce.repository.UsuarioRepository;
@@ -66,8 +64,10 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/cadastrar")
-	public ResponseEntity<Optional<Usuario>> Post(@Valid @RequestBody Usuario usuarioNovo){
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.cadastrarUsuario(usuarioNovo));
+	public ResponseEntity<Usuario> Post(@Valid @RequestBody Usuario usuarioNovo){
+		return usuarioService.cadastrarUsuario(usuarioNovo)
+				.map(usuarioCadastrado -> ResponseEntity.status(201).body(usuarioCadastrado))
+				.orElse(ResponseEntity.badRequest().build());
 
 	}
 
