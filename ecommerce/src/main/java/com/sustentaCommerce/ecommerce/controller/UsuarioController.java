@@ -72,7 +72,7 @@ public class UsuarioController {
 	}
 
 	@PutMapping // atualizar informações de um produto
-	ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuarioAtualizado) { // end point
+	ResponseEntity<Optional<Usuario>> putUsuario(@Valid @RequestBody Usuario usuarioAtualizado) { // end point
 		Optional<Usuario> usuarioExistente = repositoryU.findById(usuarioAtualizado.getIdUsuario());
 		if (usuarioExistente.isPresent()) {
 			usuarioExistente.get().setUsuario(usuarioAtualizado.getUsuario());
@@ -80,7 +80,7 @@ public class UsuarioController {
 			usuarioExistente.get().setSenhaUsuario(usuarioAtualizado.getSenhaUsuario());
 			usuarioExistente.get().setTipoPagamento(usuarioAtualizado.getTipoPagamento());
 
-			return ResponseEntity.status(HttpStatus.CREATED).body(repositoryU.save(usuarioExistente.get()));
+			return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.atualizarUsuario(usuarioAtualizado));
 		} else {
 			return ResponseEntity.notFound().build();
 		}

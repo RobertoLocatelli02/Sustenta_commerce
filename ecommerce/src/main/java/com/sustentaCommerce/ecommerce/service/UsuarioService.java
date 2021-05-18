@@ -18,15 +18,27 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
-	public Optional<Usuario> cadastrarUsuario (Usuario usuarioNovo) {
+	public Optional<Usuario> cadastrarUsuario(Usuario usuarioNovo) {
 		Optional<Usuario> usuarioExistente = repository.findByEmailUsuario(usuarioNovo.getEmailUsuario());
-		if (usuarioExistente.isPresent()) {
+		if(usuarioExistente.isPresent()) {
 			return Optional.empty();
 		} else {
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 			String senhaCriptografada = encoder.encode(usuarioNovo.getSenhaUsuario());
 			usuarioNovo.setSenhaUsuario(senhaCriptografada);
 			return Optional.ofNullable(repository.save(usuarioNovo));
+		}
+	}
+	
+	public Optional<Usuario> atualizarUsuario(Usuario usuarioAtualizado) {
+		Optional<Usuario> usuarioExistente = repository.findByEmailUsuario(usuarioAtualizado.getEmailUsuario());
+		if(usuarioExistente.isPresent()) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			String senhaCriptografada = encoder.encode(usuarioAtualizado.getSenhaUsuario());
+			usuarioAtualizado.setSenhaUsuario(senhaCriptografada);
+			return Optional.ofNullable(repository.save(usuarioAtualizado));
+		} else {
+			return Optional.empty();
 		}
 	}
 	
@@ -47,5 +59,4 @@ public class UsuarioService {
 		}
 		return null;
 	}
-
 }
