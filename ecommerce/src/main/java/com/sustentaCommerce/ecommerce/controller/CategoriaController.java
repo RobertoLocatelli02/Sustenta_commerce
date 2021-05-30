@@ -43,16 +43,6 @@ public class CategoriaController {
 		return ResponseEntity.ok(repositoryC.findAllByDepartamentoProdutoContainingIgnoreCase(departamentoProduto));
 	}
 	
-	@GetMapping("/tipoProduto/{tipoProduto}")
-	ResponseEntity<List<Categorias>> findByTipoProdutoCategoria(@PathVariable String tipoProduto) {
-		return ResponseEntity.ok(repositoryC.findAllByTipoProdutoContainingIgnoreCase(tipoProduto));
-	}
-	
-	@GetMapping("/materiaPrima/{materiaPrimaProduto}")
-	ResponseEntity<List<Categorias>> findByMateriaPrimaCategoria(@PathVariable String materiaPrimaProduto) {
-		return ResponseEntity.ok(repositoryC.findAllByMateriaPrimaProdutoContainingIgnoreCase(materiaPrimaProduto));
-	}
-	
 	@PostMapping
 	ResponseEntity<Categorias> postCategoria(@Valid @RequestBody Categorias categoriaNovo) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repositoryC.save(categoriaNovo));
@@ -65,8 +55,6 @@ public class CategoriaController {
 		
 		if (categoriaExistente.isPresent()) {
 			categoriaExistente.get().setDepartamentoProduto(categoriaAtualizada.getDepartamentoProduto());
-			categoriaExistente.get().setMateriaPrimaProduto(categoriaAtualizada.getMateriaPrimaProduto());
-			categoriaExistente.get().setTipoProduto(categoriaAtualizada.getTipoProduto());
 			return ResponseEntity.status(HttpStatus.CREATED).body(repositoryC.save(categoriaExistente.get()));
 		} else {
 			return ResponseEntity.notFound().build();

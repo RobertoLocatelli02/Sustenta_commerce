@@ -37,6 +37,11 @@ public class ProdutoController {
 	ResponseEntity<Produtos> findByIdProduto(@PathVariable Long idProduto) { // end point
 		return repositoryP.findById(idProduto).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
+	
+	@GetMapping("/nome/{nomeProduto}")
+	public ResponseEntity<List<Produtos>> getByNome(@PathVariable String nomeProduto) {
+		return ResponseEntity.ok(repositoryP.findAllByNomeProdutoContainingIgnoreCase(nomeProduto));
+	}
 
 	@GetMapping("/precoUnitario/{precoUnitarioProduto}") // retorna todos os produtos por um preço unitario
 	ResponseEntity<List<Produtos>> findByprecoUnitarioProdutos(@PathVariable Float precoUnitarioProduto) { // end point

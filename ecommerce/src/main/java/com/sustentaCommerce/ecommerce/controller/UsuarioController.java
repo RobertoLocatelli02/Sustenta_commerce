@@ -78,7 +78,6 @@ public class UsuarioController {
 			usuarioExistente.get().setUsuario(usuarioAtualizado.getUsuario());
 			usuarioExistente.get().setEmailUsuario(usuarioAtualizado.getEmailUsuario());
 			usuarioExistente.get().setSenhaUsuario(usuarioAtualizado.getSenhaUsuario());
-			usuarioExistente.get().setTipoPagamento(usuarioAtualizado.getTipoPagamento());
 
 			return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.atualizarUsuario(usuarioAtualizado));
 		} else {

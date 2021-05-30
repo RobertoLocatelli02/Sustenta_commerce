@@ -33,6 +33,9 @@ public class Produtos {
 	private Float precoUnitarioProduto;
 	
 	@NotNull
+	private String imagemProduto;
+	
+	@NotNull
 	private Integer quantidadeProduto;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -43,6 +46,14 @@ public class Produtos {
 	@ManyToOne
 	@JoinColumn(name = "usuario_produto", referencedColumnName = "idUsuario")
 	private Usuario usuario_produtos_criados;
+
+	public String getImagemProduto() {
+		return imagemProduto;
+	}
+
+	public void setImagemProduto(String imagemProduto) {
+		this.imagemProduto = imagemProduto;
+	}
 
 	public Long getIdProduto() {
 		return idProduto;

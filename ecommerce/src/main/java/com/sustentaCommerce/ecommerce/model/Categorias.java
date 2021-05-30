@@ -26,12 +26,6 @@ public class Categorias {
 	@NotNull
 	private String departamentoProduto;
 	
-	@NotNull
-	private String tipoProduto;
-	
-	@NotNull
-	private String materiaPrimaProduto;
-	
 	@OneToMany(mappedBy = "categoria_produtos_criados", fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("categoria_produtos")
 	private List<Produtos> categoria_produtos2 = new ArrayList<>();
@@ -50,22 +44,6 @@ public class Categorias {
 
 	public void setDepartamentoProduto(String departamentoProduto) {
 		this.departamentoProduto = departamentoProduto;
-	}
-
-	public String getTipoProduto() {
-		return tipoProduto;
-	}
-
-	public void setTipoProduto(String tipoProduto) {
-		this.tipoProduto = tipoProduto;
-	}
-
-	public String getMateriaPrimaProduto() {
-		return materiaPrimaProduto;
-	}
-
-	public void setMateriaPrimaProduto(String materiaPrimaProduto) {
-		this.materiaPrimaProduto = materiaPrimaProduto;
 	}
 
 	public List<Produtos> getCategoria_produtos2() {
